@@ -12,57 +12,104 @@
     <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
     <style>
-        :root {
+        /* Paletas de colores para cada nivel */
+        body[data-theme="level-1"] {
             --theme-color-600: #0d9488; /* teal-600 */
-            --theme-focus-ring-color: #14b8a6; /* teal-500 */
             --theme-bg-from: #a7f3d0; /* emerald-200 */
             --theme-bg-to: #a5f3fc; /* cyan-200 */
             --btn-gradient-from: #14b8a6; /* teal-500 */
             --btn-gradient-to: #059669; /* emerald-600 */
-            --accent-color: #f59e0b; /* amber-500 */
-            --correct-color: #16a34a; /* green-600 */
-            --incorrect-color: #dc2626; /* red-600 */
-            --card-bg-color: rgba(255, 255, 255, 0.7);
-            --card-border-color: rgba(255, 255, 255, 0.5);
-            --shadow-color: rgba(0, 0, 0, 0.1);
             --theme-shadow-color: rgba(20, 184, 166, 0.4);
+            --hover-border-color: #5eead4; /* teal-300 */
+        }
+        body[data-theme="level-2"] {
+            --theme-color-600: #f97316; /* orange-600 */
+            --theme-bg-from: #fde68a; /* amber-200 */
+            --theme-bg-to: #fed7aa; /* orange-200 */
+            --btn-gradient-from: #f59e0b; /* amber-500 */
+            --btn-gradient-to: #ea580c; /* orange-600 */
+            --theme-shadow-color: rgba(245, 158, 11, 0.4);
+            --hover-border-color: #fcd34d; /* amber-300 */
+        }
+        body[data-theme="level-3"] {
+            --theme-color-600: #7c3aed; /* violet-600 */
+            --theme-bg-from: #d8b4fe; /* purple-300 */
+            --theme-bg-to: #f9a8d4; /* pink-300 */
+            --btn-gradient-from: #8b5cf6; /* violet-500 */
+            --btn-gradient-to: #d946ef; /* fuchsia-500 */
+            --theme-shadow-color: rgba(139, 92, 246, 0.4);
+            --hover-border-color: #c084fc; /* purple-400 */
+        }
+
+        :root {
+            --accent-color: #22d3ee; /* cyan-400 */
+            --correct-color: #22c55e; /* green-500 */
+            --incorrect-color: #ef4444; /* red-500 */
+            --card-bg-color: rgba(255, 255, 255, 0.75);
+            --card-border-color: rgba(255, 255, 255, 0.6);
+            --shadow-color: rgba(0, 0, 0, 0.1);
         }
 
         body { 
             font-family: 'Lexend', sans-serif; 
             background-image: linear-gradient(135deg, var(--theme-bg-from), var(--theme-bg-to)); 
+            transition: background-image 0.5s ease-in-out;
         }
         
-        /* Estilo de Glassmorphism mejorado */
         .glass-container {
             background-color: var(--card-bg-color);
-            backdrop-filter: blur(12px);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
             border: 1px solid var(--card-border-color);
             box-shadow: 0 8px 32px 0 var(--shadow-color);
         }
 
         .btn-primary { 
             background: linear-gradient(to right, var(--btn-gradient-from), var(--btn-gradient-to)); 
-            transition: transform 0.2s, box-shadow 0.2s; 
+            transition: transform 0.2s, box-shadow 0.2s, background 0.5s; 
         }
         .btn-primary:hover { 
             transform: translateY(-3px); 
             box-shadow: 0 6px 12px -1px var(--theme-shadow-color); 
         }
         
-        .selector-btn.selected-option {
-            background-color: var(--theme-color-600);
+        .selector-btn {
+            transition: transform 0.2s, box-shadow 0.2s, background-color 0.3s, border-color 0.3s, color 0.3s;
+        }
+        .selector-btn:hover { border-color: var(--hover-border-color); }
+
+        /* Estilos de nivel por defecto (antes de seleccionar) */
+        #level-selector button[data-level="1"] { border-color: #5eead4; }
+        #level-selector button[data-level="1"] .font-bold { color: #0d9488; }
+        #level-selector button[data-level="2"] { border-color: #fcd34d; }
+        #level-selector button[data-level="2"] .font-bold { color: #f97316; }
+        #level-selector button[data-level="3"] { border-color: #c084fc; }
+        #level-selector button[data-level="3"] .font-bold { color: #7c3aed; }
+        
+        #level-selector .selector-btn.selected-option {
+            background-color: var(--theme-color-600) !important;
             color: white !important;
             transform: translateY(-2px);
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            border-color: transparent;
+            border-color: transparent !important;
+        }
+
+        #question-count-selector .selector-btn.selected-option {
+            background-color: var(--theme-color-600);
+            color: white;
         }
         
-        .selector-btn.selected-option .font-bold { color: white; }
-        .selector-btn.selected-option .text-gray-500 { color: #d1d5db; }
+        /* Reglas para el botón seleccionado con mayor especificidad */
+        #level-selector .selector-btn.selected-option .font-bold,
+        #level-selector .selector-btn.selected-option .description { 
+            color: white; 
+        }
+        #level-selector .selector-btn.selected-option .description {
+             opacity: 0.9;
+        }
 
-        .text-theme { color: var(--theme-color-600); }
-        .ring-theme:focus { --tw-ring-color: var(--theme-focus-ring-color); }
+        .text-theme { color: var(--theme-color-600); transition: color 0.5s; }
+        .ring-theme:focus { --tw-ring-color: var(--theme-color-600); }
         .text-accent { color: var(--accent-color); }
         .border-correct { border-color: var(--correct-color); }
         .border-incorrect { border-color: var(--incorrect-color); }
@@ -76,51 +123,57 @@
             background-color: var(--accent-color);
             transition: width 0.4s ease-in-out;
         }
+
+        #confirmation-modal { transition: opacity 0.3s ease-in-out; }
+        #confirmation-modal-dialog { transition: transform 0.3s ease-in-out; }
+
     </style>
 </head>
-<body class="min-h-screen flex items-center justify-center p-4">
+<body data-theme="level-1" class="min-h-screen flex items-center justify-center p-4">
 
     <!-- Menú Principal -->
     <div id="main-menu" class="glass-container p-8 rounded-2xl w-full max-w-xl text-center transition-transform duration-300">
         <h1 class="text-4xl font-extrabold text-theme mb-2">Reacciones Orgánicas</h1>
         <p class="text-xl font-bold text-gray-600 mb-6">Challenge</p>
         
-        <div class="mb-6 bg-white/30 p-4 rounded-lg">
-            <h3 class="text-lg font-bold text-gray-700 mb-2">Marcador General</h3>
-            <div id="stats-display" class="text-gray-700 text-base flex justify-center items-center space-x-4"></div>
+        <div class="mb-6 bg-white/30 p-4 rounded-lg max-w-md mx-auto">
+            <h3 class="text-md font-bold text-gray-700 mb-2">Marcador General</h3>
+            <div id="stats-display" class="text-gray-700 text-sm flex justify-center items-center space-x-4"></div>
             <button id="reset-stats-btn" class="mt-2 text-xs text-gray-500 hover:text-red-500 transition-colors">Reiniciar</button>
         </div>
         
         <div class="mb-6">
             <h3 class="text-xl font-semibold text-gray-700 mb-3">Nivel de Dificultad</h3>
             <div id="level-selector" class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <button data-level="1" class="selector-btn flex-1 p-4 rounded-lg bg-white/50 border-2 border-transparent text-gray-700 font-semibold transition duration-200 hover:border-teal-300 text-center">
+                <button data-level="1" class="selector-btn flex-1 p-4 rounded-lg bg-white/50 border-2 text-gray-700 font-semibold">
                     <span class="block font-bold">Nivel 1</span>
-                    <span class="block text-sm text-gray-500 mt-1">Completa la reacción</span>
+                    <span class="description block text-sm text-gray-500 mt-1">Completa la reacción</span>
                 </button>
-                <button data-level="2" class="selector-btn flex-1 p-4 rounded-lg bg-white/50 border-2 border-transparent text-gray-700 font-semibold transition duration-200 hover:border-teal-300 text-center">
+                <button data-level="2" class="selector-btn flex-1 p-4 rounded-lg bg-white/50 border-2 text-gray-700 font-semibold">
                     <span class="block font-bold">Nivel 2</span>
-                    <span class="block text-sm text-gray-500 mt-1">Identifica y completa</span>
+                    <span class="description block text-sm text-gray-500 mt-1">Identifica y completa</span>
                 </button>
-                <button data-level="3" class="selector-btn flex-1 p-4 rounded-lg bg-white/50 border-2 border-transparent text-gray-700 font-semibold transition duration-200 hover:border-teal-300 text-center">
+                <button data-level="3" class="selector-btn flex-1 p-4 rounded-lg bg-white/50 border-2 text-gray-700 font-semibold">
                     <span class="block font-bold">Nivel 3</span>
-                    <span class="block text-sm text-gray-500 mt-1">Demuestra lo que sabes</span>
+                    <span class="description block text-sm text-gray-500 mt-1">Demuestra lo que sabes</span>
                 </button>
             </div>
         </div>
 
         <div class="mb-8">
             <h3 class="text-xl font-semibold text-gray-700 mb-3">Número de Ejercicios</h3>
-            <div id="question-count-selector" class="flex justify-center space-x-4 bg-gray-200/50 rounded-full p-1">
-                <button data-count="10" class="selector-btn px-6 py-2 rounded-full text-gray-600 font-semibold transition-colors duration-200">10</button>
-                <button data-count="15" class="selector-btn px-6 py-2 rounded-full text-gray-600 font-semibold transition-colors duration-200">15</button>
-                <button data-count="20" class="selector-btn px-6 py-2 rounded-full text-gray-600 font-semibold transition-colors duration-200">20</button>
+            <div id="question-count-selector" class="flex justify-center space-x-2 bg-gray-200/50 rounded-full p-1">
+                <button data-count="5" class="selector-btn px-5 py-2 rounded-full text-gray-600 font-semibold">5</button>
+                <button data-count="10" class="selector-btn px-5 py-2 rounded-full text-gray-600 font-semibold">10</button>
+                <button data-count="15" class="selector-btn px-5 py-2 rounded-full text-gray-600 font-semibold">15</button>
+                <button data-count="20" class="selector-btn px-5 py-2 rounded-full text-gray-600 font-semibold">20</button>
             </div>
         </div>
 
         <button id="start-game-btn" class="btn-primary text-white font-bold py-3 px-12 rounded-full text-lg shadow-lg">Empezar</button>
     </div>
 
+    <!-- El resto del HTML (vistas de juego, game over, modal) permanece sin cambios -->
     <!-- Vista de Juego -->
     <div id="game-view" class="glass-container p-8 rounded-2xl w-full max-w-2xl hidden transition-transform duration-300">
         <div class="flex items-center justify-between mb-2">
@@ -161,22 +214,58 @@
         </div>
     </div>
 
+    <!-- Modal de Confirmación -->
+    <div id="confirmation-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 hidden opacity-0">
+        <div id="confirmation-modal-dialog" class="glass-container p-8 rounded-2xl w-full max-w-sm text-center transform scale-95">
+            <h3 class="text-xl font-bold text-gray-800 mb-4">¿Estás seguro?</h3>
+            <p class="text-gray-600 mb-6">Esta acción borrará todas tus estadísticas de forma permanente.</p>
+            <div class="flex space-x-4">
+                <button id="confirm-reset-btn" class="flex-1 bg-red-500 text-white font-bold py-3 px-6 rounded-full transition hover:bg-red-600">Sí, borrar</button>
+                <button id="cancel-reset-btn" class="flex-1 bg-gray-200 text-gray-700 font-bold py-3 px-6 rounded-full transition hover:bg-gray-300">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
     <script>
-        // --- BASE DE DATOS DE REACCIONES ---
+        // --- BASE DE DATOS DE REACCIONES (MISMA BASE AMPLIADA) ---
         const organicReactions = [
-            // Nivel 1 & 2: Completa los productos (Reacciones más comunes)
-            { id: 1, reaction: 'CH<sub>3</sub>-CH<sub>2</sub>-OH + HBr → ?', product: 'CH<sub>3</sub>-CH<sub>2</sub>-Br', compoundName: 'Bromoetano', reactionType: 'Sustitución', category: 'Halogenación', catalyst: '—', type: 'complete' },
-            { id: 2, reaction: 'CH<sub>3</sub>-CH=CH<sub>2</sub> + H<sub>2</sub> → ?', product: 'CH<sub>3</sub>-CH<sub>2</sub>-CH<sub>3</sub>', compoundName: 'Propano', reactionType: 'Adición', category: 'Hidrogenación', catalyst: 'Ni/Pt/Pd', type: 'complete' },
-            { id: 3, reaction: 'CH<sub>3</sub>-CH<sub>2</sub>-Br + NaOH → ? + NaBr', product: 'CH<sub>2</sub>=CH<sub>2</sub>', compoundName: 'Eteno', reactionType: 'Eliminación', category: null, catalyst: '—', type: 'complete' },
-            { id: 4, reaction: 'CH<sub>3</sub>-CH<sub>2</sub>-OH + H<sub>2</sub>SO<sub>4</sub> → ?', product: 'CH<sub>2</sub>=CH<sub>2</sub>', compoundName: 'Eteno', reactionType: 'Eliminación', category: 'Deshidratación', catalyst: 'Calor', type: 'complete' },
-            { id: 5, reaction: 'CH<sub>3</sub>-COOH + CH<sub>3</sub>OH → ? + H<sub>2</sub>O', product: 'CH<sub>3</sub>-COO-CH<sub>3</sub>', compoundName: 'Etanoato de metilo', reactionType: 'Esterificación', category: null, catalyst: 'H+', type: 'complete' },
-            { id: 6, reaction: 'CH<sub>3</sub>-CH=CH<sub>2</sub> + H<sub>2</sub>O → ?', product: 'CH<sub>3</sub>-CH(OH)-CH<sub>3</sub>', compoundName: 'Propan-2-ol', reactionType: 'Adición', category: 'Hidratación', catalyst: 'H+', type: 'complete' },
-            { id: 7, reaction: 'CH<sub>3</sub>-CHO + [O] → ?', product: 'CH<sub>3</sub>-COOH', compoundName: 'Ácido etanoico', reactionType: 'Oxidación', category: null, catalyst: '—', type: 'complete' },
-            { id: 8, reaction: 'CH<sub>3</sub>-CO-CH<sub>3</sub> + H<sub>2</sub> → ?', product: 'CH<sub>3</sub>-CH(OH)-CH<sub>3</sub>', compoundName: 'Propan-2-ol', reactionType: 'Reducción', category: null, catalyst: 'Ni/Pt/Pd', type: 'complete' },
-            { id: 9, reaction: 'CH<sub>3</sub>-CH=CH<sub>2</sub> + HCl → ?', product: 'CH<sub>3</sub>-CHCl-CH<sub>3</sub>', compoundName: '2-Cloropropano', reactionType: 'Adición', category: 'Haluros de Hidrógeno', catalyst: '—', type: 'complete' },
-            { id: 10, reaction: 'C<sub>6</sub>H<sub>6</sub> + HNO<sub>3</sub> → ? + H<sub>2</sub>O', product: 'C<sub>6</sub>H<sub>5</sub>-NO<sub>2</sub>', compoundName: 'Nitrobenceno', reactionType: 'Sustitución', category: null, catalyst: 'H<sub>2</sub>SO<sub>4</sub>', type: 'complete' },
-            // ... (el resto de reacciones se mantienen igual)
-            { id: 42, reaction: '? → CO<sub>2</sub> + H<sub>2</sub>O', product: 'CH<sub>4</sub>', compoundName: 'Metano', reactionType: 'Combustión', category: null, catalyst: '—', type: 'reverse' },
+             // Halogenuros de Alquilo
+            { id: 1, reaction: 'CH<sub>3</sub>-CH<sub>3</sub> + Cl<sub>2</sub> → ? + HCl', product: 'CH<sub>3</sub>-CH<sub>2</sub>Cl', compoundName: 'Cloroetano', reactionType: 'Sustitución Radicalaria', category: 'Halogenación', catalyst: 'Luz UV', type: 'complete' },
+            { id: 2, reaction: 'CH<sub>3</sub>-CH<sub>2</sub>-OH + HBr → ? + H<sub>2</sub>O', product: 'CH<sub>3</sub>-CH<sub>2</sub>-Br', compoundName: 'Bromoetano', reactionType: 'Sustitución Nucleófila', category: 'Halogenación', catalyst: '—', type: 'complete' },
+            { id: 3, reaction: 'CH<sub>3</sub>-CH=CH<sub>2</sub> + HCl → ?', product: 'CH<sub>3</sub>-CHCl-CH<sub>3</sub>', compoundName: '2-Cloropropano', reactionType: 'Adición Electrofílica', category: 'Hidrohalogenación', catalyst: 'Markovnikov', type: 'complete' },
+            { id: 4, reaction: 'CH<sub>2</sub>=CH<sub>2</sub> + Br<sub>2</sub> → ?', product: 'BrCH<sub>2</sub>-CH<sub>2</sub>Br', compoundName: '1,2-Dibromoetano', reactionType: 'Adición Electrofílica', category: 'Halogenación', catalyst: '—', type: 'complete' },
+            { id: 5, reaction: 'CH<sub>3</sub>-CH<sub>2</sub>-Br + NaOH(aq) → ? + NaBr', product: 'CH<sub>3</sub>-CH<sub>2</sub>-OH', compoundName: 'Etanol', reactionType: 'Sustitución Nucleófila', category: 'Hidrólisis', catalyst: '—', type: 'complete' },
+            { id: 6, reaction: 'CH<sub>3</sub>-CH<sub>2</sub>-Br + KOH(alcohol) → ? + KBr + H<sub>2</sub>O', product: 'CH<sub>2</sub>=CH<sub>2</sub>', compoundName: 'Eteno', reactionType: 'Eliminación', category: 'Deshidrohalogenación', catalyst: 'Calor', type: 'complete' },
+            // Alcoholes
+            { id: 7, reaction: 'CH<sub>3</sub>-CH=CH<sub>2</sub> + H<sub>2</sub>O → ?', product: 'CH<sub>3</sub>-CH(OH)-CH<sub>3</sub>', compoundName: 'Propan-2-ol', reactionType: 'Adición Electrofílica', category: 'Hidratación', catalyst: 'H+', type: 'complete' },
+            { id: 8, reaction: 'CH<sub>3</sub>-CH<sub>2</sub>-OH + H<sub>2</sub>SO<sub>4</sub>(conc) → ? + H<sub>2</sub>O', product: 'CH<sub>2</sub>=CH<sub>2</sub>', compoundName: 'Eteno', reactionType: 'Eliminación', category: 'Deshidratación', catalyst: '180°C', type: 'complete' },
+            { id: 9, reaction: 'CH<sub>3</sub>-CH<sub>2</sub>-OH + [O] → ?', product: 'CH<sub>3</sub>-CHO', compoundName: 'Etanal', reactionType: 'Oxidación', category: 'Alcohol Primario', catalyst: 'K<sub>2</sub>Cr<sub>2</sub>O<sub>7</sub>/H+', type: 'complete' },
+            { id: 10, reaction: 'CH<sub>3</sub>-CH(OH)-CH<sub>3</sub> + [O] → ?', product: 'CH<sub>3</sub>-CO-CH<sub>3</sub>', compoundName: 'Propanona', reactionType: 'Oxidación', category: 'Alcohol Secundario', catalyst: 'KMnO<sub>4</sub>/H+', type: 'complete' },
+            { id: 11, reaction: '2 CH<sub>3</sub>-CH<sub>2</sub>-OH + H<sub>2</sub>SO<sub>4</sub>(conc) → ? + H<sub>2</sub>O', product: 'CH<sub>3</sub>-CH<sub>2</sub>-O-CH<sub>2</sub>-CH<sub>3</sub>', compoundName: 'Dietil éter', reactionType: 'Sustitución', category: 'Formación de éter', catalyst: '140°C', type: 'complete' },
+            // Aldehídos y Cetonas
+            { id: 12, reaction: 'CH<sub>3</sub>-CHO + H<sub>2</sub> → ?', product: 'CH<sub>3</sub>-CH<sub>2</sub>-OH', compoundName: 'Etanol', reactionType: 'Reducción', category: 'Hidrogenación', catalyst: 'Ni/Pt/Pd', type: 'complete' },
+            { id: 13, reaction: 'CH<sub>3</sub>-CO-CH<sub>3</sub> + H<sub>2</sub> → ?', product: 'CH<sub>3</sub>-CH(OH)-CH<sub>3</sub>', compoundName: 'Propan-2-ol', reactionType: 'Reducción', category: 'Hidrogenación', catalyst: 'LiAlH<sub>4</sub>/NaBH<sub>4</sub>', type: 'complete' },
+            { id: 14, reaction: 'CH<sub>3</sub>-CHO + [O] → ?', product: 'CH<sub>3</sub>-COOH', compoundName: 'Ácido etanoico', reactionType: 'Oxidación', category: 'Reactivo de Tollens', catalyst: '[Ag(NH<sub>3</sub>)<sub>2</sub>]+', type: 'complete' },
+            { id: 15, reaction: 'CH≡CH + H<sub>2</sub>O → ?', product: 'CH<sub>3</sub>-CHO', compoundName: 'Etanal', reactionType: 'Adición', category: 'Hidratación de alquinos', catalyst: 'HgSO<sub>4</sub>/H<sub>2</sub>SO<sub>4</sub>', type: 'complete' },
+            // Ácidos Carboxílicos y Derivados
+            { id: 16, reaction: 'CH<sub>3</sub>-CH<sub>2</sub>OH + [O] fuerte → ?', product: 'CH<sub>3</sub>-COOH', compoundName: 'Ácido etanoico', reactionType: 'Oxidación', category: 'Alcohol Primario', catalyst: 'KMnO<sub>4</sub>', type: 'complete' },
+            { id: 17, reaction: 'CH<sub>3</sub>-COOH + CH<sub>3</sub>OH ↔ ? + H<sub>2</sub>O', product: 'CH<sub>3</sub>-COO-CH<sub>3</sub>', compoundName: 'Etanoato de metilo', reactionType: 'Esterificación de Fischer', category: 'Esterificación', catalyst: 'H+', type: 'complete' },
+            { id: 18, reaction: 'CH<sub>3</sub>-COO-CH<sub>2</sub>CH<sub>3</sub> + NaOH → ? + CH<sub>3</sub>CH<sub>2</sub>OH', product: 'CH<sub>3</sub>-COONa', compoundName: 'Etanoato de sodio', reactionType: 'Hidrólisis Básica', category: 'Saponificación', catalyst: 'Calor', type: 'complete' },
+            { id: 19, reaction: 'CH<sub>3</sub>-COOH + NaOH → ? + H<sub>2</sub>O', product: 'CH<sub>3</sub>-COONa', compoundName: 'Etanoato de sodio', reactionType: 'Neutralización', category: 'Ácido-Base', catalyst: '—', type: 'complete' },
+            { id: 20, reaction: 'CH<sub>3</sub>-COOH + LiAlH<sub>4</sub> → ?', product: 'CH<sub>3</sub>-CH<sub>2</sub>-OH', compoundName: 'Etanol', reactionType: 'Reducción', category: 'Reducción de Ácidos', catalyst: '1) LiAlH<sub>4</sub> 2) H<sub>3</sub>O+', type: 'complete' },
+            // Hidrocarburos Aromáticos
+            { id: 21, reaction: 'C<sub>6</sub>H<sub>6</sub> + HNO<sub>3</sub> → ? + H<sub>2</sub>O', product: 'C<sub>6</sub>H<sub>5</sub>-NO<sub>2</sub>', compoundName: 'Nitrobenceno', reactionType: 'Sustitución Electrofílica', category: 'Nitración', catalyst: 'H<sub>2</sub>SO<sub>4</sub>', type: 'complete' },
+            { id: 22, reaction: 'C<sub>6</sub>H<sub>6</sub> + Br<sub>2</sub> → ? + HBr', product: 'C<sub>6</sub>H<sub>5</sub>Br', compoundName: 'Bromobenceno', reactionType: 'Sustitución Electrofílica', category: 'Halogenación', catalyst: 'FeBr<sub>3</sub>', type: 'complete' },
+            { id: 23, reaction: 'C<sub>6</sub>H<sub>6</sub> + CH<sub>3</sub>Cl → ? + HCl', product: 'C<sub>6</sub>H<sub>5</sub>-CH<sub>3</sub>', compoundName: 'Tolueno', reactionType: 'Sustitución Electrofílica', category: 'Alquilación Friedel-Crafts', catalyst: 'AlCl<sub>3</sub>', type: 'complete' },
+            { id: 24, reaction: 'C<sub>6</sub>H<sub>5</sub>-CH<sub>3</sub> + [O] → ?', product: 'C<sub>6</sub>H<sub>5</sub>-COOH', compoundName: 'Ácido benzoico', reactionType: 'Oxidación', category: 'Cadena lateral', catalyst: 'KMnO<sub>4</sub>/Calor', type: 'complete' },
+            // Reacciones Variadas y de Nivel 3 (Reverse)
+            { id: 25, reaction: '? + H<sub>2</sub>(exceso) → CH<sub>3</sub>CH<sub>2</sub>CH<sub>3</sub>', product: 'CH<sub>3</sub>-C≡CH', compoundName: 'Propino', reactionType: 'Adición', category: 'Hidrogenación', catalyst: 'Pt/Pd/Ni', type: 'reverse' },
+            { id: 26, reaction: '? + H<sub>2</sub>O → CH<sub>3</sub>COOH + CH<sub>3</sub>OH', product: 'CH<sub>3</sub>-COO-CH<sub>3</sub>', compoundName: 'Etanoato de metilo', reactionType: 'Hidrólisis Ácida', category: 'Esterificación', catalyst: 'H+', type: 'reverse' },
+            { id: 27, reaction: '? → C<sub>6</sub>H<sub>5</sub>-NO<sub>2</sub>', product: 'C<sub>6</sub>H<sub>6</sub>', compoundName: 'Benceno', reactionType: 'Nitración', category: null, catalyst: 'HNO<sub>3</sub>/H<sub>2</sub>SO<sub>4</sub>', type: 'reverse' },
+            { id: 28, reaction: 'CH<sub>4</sub> + 2 O<sub>2</sub> → ? + ?', product: 'CO<sub>2</sub> + 2 H<sub>2</sub>O', compoundName: 'Dióxido de carbono y Agua', reactionType: 'Combustión', category: 'Combustión', catalyst: '—', type: 'complete' },
+            { id: 29, reaction: 'n(CH<sub>2</sub>=CH<sub>2</sub>) → ?', product: '-(CH<sub>2</sub>-CH<sub>2</sub>)-n', compoundName: 'Polietileno', reactionType: 'Polimerización', category: 'Adición', catalyst: 'Iniciador', type: 'complete' },
+            { id: 30, reaction: 'CH<sub>3</sub>-C≡CH + H<sub>2</sub> → ?', product: 'CH<sub>3</sub>-CH=CH<sub>2</sub>', compoundName: 'Propeno', reactionType: 'Adición', category: 'Hidrogenación', catalyst: 'Catalizador de Lindlar', type: 'complete' },
+            { id: 72, reaction: '? + HBr (peróxidos) → CH<sub>3</sub>CH<sub>2</sub>CH<sub>2</sub>Br', product: 'CH<sub>3</sub>-CH=CH<sub>2</sub>', compoundName: 'Propeno', reactionType: 'Adición Radicalaria', category: 'Hidrohalogenación Anti-Markovnikov', catalyst: 'ROOR', type: 'reverse' }
         ];
         
         // --- ESTADO DEL JUEGO ---
@@ -204,6 +293,8 @@
                 playAgain: document.getElementById('play-again-btn'),
                 mainMenu: document.getElementById('main-menu-btn'),
                 resetStats: document.getElementById('reset-stats-btn'),
+                confirmReset: document.getElementById('confirm-reset-btn'),
+                cancelReset: document.getElementById('cancel-reset-btn'),
             },
             displays: {
                 reactionText: document.getElementById('reaction-text'),
@@ -220,19 +311,25 @@
             selectors: {
                 level: document.getElementById('level-selector'),
                 questionCount: document.getElementById('question-count-selector'),
+            },
+            modal: {
+                container: document.getElementById('confirmation-modal'),
+                dialog: document.getElementById('confirmation-modal-dialog'),
             }
         };
-
-        // --- LÓGICA DE MANEJO DE VISTAS ---
+        
+        // --- LÓGICA DE MANEJO DE VISTAS Y TEMAS ---
         const showView = (viewName) => {
             Object.values(DOMElements.views).forEach(v => v.classList.add('hidden'));
             DOMElements.views[viewName].classList.remove('hidden');
         };
+
+        const setTheme = (level) => {
+            document.body.dataset.theme = `level-${level}`;
+        };
         
-        // --- LÓGICA DE NORMALIZACIÓN DE RESPUESTAS ---
         const normalizeValue = (value) => {
             if (typeof value !== 'string') return '';
-            // Elimina HTML, guiones, espacios y convierte a minúsculas
             return value.replace(/<[^>]*>|[\s-]/g, '').toLowerCase();
         };
 
@@ -240,12 +337,13 @@
         const startGame = () => {
             gameState.score = 0;
             gameState.currentQuestion = 0;
-            const reactionTypeFilter = gameState.level < 3 ? 'complete' : null;
             
             let filteredReactions = organicReactions;
-            if (reactionTypeFilter) {
-                 filteredReactions = organicReactions.filter(r => r.type === reactionTypeFilter);
+            // Para Nivel 1 y 2, solo usar reacciones de tipo 'complete'
+            if (gameState.level < 3) {
+                 filteredReactions = organicReactions.filter(r => r.type === 'complete');
             }
+            // Para Nivel 3, se usan todas las reacciones (la condición no se cumple)
             
             gameState.questions = [...filteredReactions].sort(() => Math.random() - 0.5).slice(0, gameState.totalQuestions);
             
@@ -309,7 +407,6 @@
 
             DOMElements.inputsContainer.innerHTML = inputsHTML;
             
-            // Añadir listener para la tecla Enter
             DOMElements.inputsContainer.querySelectorAll('input').forEach(input => {
                 input.addEventListener('keydown', (e) => {
                     if (e.key === 'Enter') {
@@ -328,7 +425,7 @@
 
             const checkField = (inputId, correctValue, isMultiOption = false) => {
                 const input = document.getElementById(inputId);
-                if (!input) return; // Si el campo no existe, no hacer nada
+                if (!input) return;
 
                 const userValue = normalizeValue(input.value);
                 let isCorrect = false;
@@ -394,8 +491,7 @@
             DOMElements.displays.finalScore.textContent = `Tu puntuación final: ${gameState.score} de ${gameState.totalQuestions}.`;
             showView('gameOver');
         };
-
-        // --- MANEJO DE ESTADÍSTICAS Y PROGRESO ---
+        
         const updateStats = (shouldSave = false) => {
             let stats = JSON.parse(localStorage.getItem('organicReactionsStats')) || { correct: 0, total: 0 };
             if (shouldSave) {
@@ -404,14 +500,29 @@
                 localStorage.setItem('organicReactionsStats', JSON.stringify(stats));
             }
             const percentage = stats.total > 0 ? ((stats.correct / stats.total) * 100).toFixed(0) : 0;
-            DOMElements.displays.stats.innerHTML = `Acertadas: <span class="font-bold text-lg text-correct">${stats.correct} / ${stats.total}</span> (${percentage}%)`;
+            DOMElements.displays.stats.innerHTML = `Acertadas: <span class="font-bold text-md text-correct">${stats.correct} / ${stats.total}</span> (${percentage}%)`;
+        };
+
+        const showConfirmationModal = () => {
+            DOMElements.modal.container.classList.remove('hidden');
+            setTimeout(() => {
+                DOMElements.modal.container.classList.remove('opacity-0');
+                DOMElements.modal.dialog.classList.remove('scale-95');
+            }, 10);
         };
         
-        const resetStats = () => {
-            if (confirm('¿Estás seguro de que quieres borrar tus estadísticas?')) {
-                localStorage.removeItem('organicReactionsStats');
-                updateStats();
-            }
+        const hideConfirmationModal = () => {
+            DOMElements.modal.container.classList.add('opacity-0');
+            DOMElements.modal.dialog.classList.add('scale-95');
+            setTimeout(() => {
+                DOMElements.modal.container.classList.add('hidden');
+            }, 300);
+        };
+
+        const handleResetStats = () => {
+            localStorage.removeItem('organicReactionsStats');
+            updateStats();
+            hideConfirmationModal();
         };
 
         const updateProgressBar = () => {
@@ -421,21 +532,27 @@
 
         // --- CONFIGURACIÓN INICIAL Y EVENT LISTENERS ---
         const initialize = () => {
-            // Configuración de botones de selección
-            const setupSelector = (selector, stateKey, isNumeric = true) => {
+            const setupSelector = (selector, stateKey, callback) => {
                 selector.addEventListener('click', (e) => {
                     const button = e.target.closest('button');
                     if (button && button.dataset[stateKey]) {
-                        gameState[stateKey === 'level' ? 'level' : 'totalQuestions'] = isNumeric ? parseInt(button.dataset[stateKey]) : button.dataset[stateKey];
+                        const value = parseInt(button.dataset[stateKey]);
+                        callback(value);
                         selector.querySelectorAll('button').forEach(btn => btn.classList.remove('selected-option'));
                         button.classList.add('selected-option');
                     }
                 });
             };
-            setupSelector(DOMElements.selectors.level, 'level');
-            setupSelector(DOMElements.selectors.questionCount, 'count');
 
-            // Listeners de botones de acción
+            setupSelector(DOMElements.selectors.level, 'level', (level) => {
+                gameState.level = level;
+                setTheme(level);
+            });
+
+            setupSelector(DOMElements.selectors.questionCount, 'count', (count) => {
+                gameState.totalQuestions = count;
+            });
+
             DOMElements.buttons.start.addEventListener('click', startGame);
             DOMElements.buttons.check.addEventListener('click', checkAnswer);
             DOMElements.buttons.nextQuestion.addEventListener('click', () => {
@@ -445,16 +562,20 @@
             DOMElements.buttons.playAgain.addEventListener('click', startGame);
             DOMElements.buttons.mainMenu.addEventListener('click', () => showView('mainMenu'));
             DOMElements.buttons.back.addEventListener('click', () => showView('mainMenu'));
-            DOMElements.buttons.resetStats.addEventListener('click', resetStats);
+            DOMElements.buttons.resetStats.addEventListener('click', showConfirmationModal);
+            DOMElements.buttons.confirmReset.addEventListener('click', handleResetStats);
+            DOMElements.buttons.cancelReset.addEventListener('click', hideConfirmationModal);
+            DOMElements.modal.container.addEventListener('click', (e) => {
+                if (e.target === DOMElements.modal.container) hideConfirmationModal();
+            });
 
             // Estado inicial
             DOMElements.selectors.level.querySelector('[data-level="1"]').click();
-            DOMElements.selectors.questionCount.querySelector('[data-count="10"]').click();
+            DOMElements.selectors.questionCount.querySelector('[data-count="5"]').click();
             updateStats();
             showView('mainMenu');
         };
 
-        // Arrancar la aplicación
         document.addEventListener('DOMContentLoaded', initialize);
     </script>
 </body>
