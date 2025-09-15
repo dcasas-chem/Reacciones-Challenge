@@ -230,33 +230,33 @@
         // --- BASE DE DATOS DE REACCIONES (MISMA BASE AMPLIADA) ---
         const organicReactions = [
              // Halogenuros de Alquilo
-            { id: 1, reaction: 'CH<sub>3</sub>-CH<sub>3</sub> + Cl<sub>2</sub> → ? + HCl', product: 'CH<sub>3</sub>-CH<sub>2</sub>Cl', compoundName: 'Cloroetano', reactionType: 'Sustitución Radicalaria', category: 'Halogenación', catalyst: 'Luz UV', type: 'complete' },
-            { id: 2, reaction: 'CH<sub>3</sub>-CH<sub>2</sub>-OH + HBr → ? + H<sub>2</sub>O', product: 'CH<sub>3</sub>-CH<sub>2</sub>-Br', compoundName: 'Bromoetano', reactionType: 'Sustitución Nucleófila', category: 'Halogenación', catalyst: '—', type: 'complete' },
-            { id: 3, reaction: 'CH<sub>3</sub>-CH=CH<sub>2</sub> + HCl → ?', product: 'CH<sub>3</sub>-CHCl-CH<sub>3</sub>', compoundName: '2-Cloropropano', reactionType: 'Adición Electrofílica', category: 'Hidrohalogenación', catalyst: 'Markovnikov', type: 'complete' },
-            { id: 4, reaction: 'CH<sub>2</sub>=CH<sub>2</sub> + Br<sub>2</sub> → ?', product: 'BrCH<sub>2</sub>-CH<sub>2</sub>Br', compoundName: '1,2-Dibromoetano', reactionType: 'Adición Electrofílica', category: 'Halogenación', catalyst: '—', type: 'complete' },
-            { id: 5, reaction: 'CH<sub>3</sub>-CH<sub>2</sub>-Br + NaOH(aq) → ? + NaBr', product: 'CH<sub>3</sub>-CH<sub>2</sub>-OH', compoundName: 'Etanol', reactionType: 'Sustitución Nucleófila', category: 'Hidrólisis', catalyst: '—', type: 'complete' },
+            { id: 1, reaction: 'CH<sub>3</sub>-CH<sub>3</sub> + Cl<sub>2</sub> → ? + HCl', product: 'CH<sub>3</sub>-CH<sub>2</sub>Cl', compoundName: 'Cloroetano', reactionType: 'Sustitución', category: 'Halogenación', catalyst: 'Luz UV', type: 'complete' },
+            { id: 2, reaction: 'CH<sub>3</sub>-CH<sub>2</sub>-OH + HBr → ? + H<sub>2</sub>O', product: 'CH<sub>3</sub>-CH<sub>2</sub>-Br', compoundName: 'Bromoetano', reactionType: 'Sustitución', category: 'Halogenación', catalyst: '—', type: 'complete' },
+            { id: 3, reaction: 'CH<sub>3</sub>-CH=CH<sub>2</sub> + HCl → ?', product: 'CH<sub>3</sub>-CHCl-CH<sub>3</sub>', compoundName: '2-Cloropropano', reactionType: 'Adición', category: 'Haluro de hidrógeno', catalyst: '-', type: 'complete' },
+            { id: 4, reaction: 'CH<sub>2</sub>=CH<sub>2</sub> + Br<sub>2</sub> → ?', product: 'BrCH<sub>2</sub>-CH<sub>2</sub>Br', compoundName: '1,2-Dibromoetano', reactionType: 'Adición', category: 'Halogenación', catalyst: '—', type: 'complete' },
+            { id: 5, reaction: 'CH<sub>3</sub>-CH<sub>2</sub>-Br + NaOH(aq) → ? + NaBr', product: 'CH<sub>3</sub>-CH<sub>2</sub>-OH', compoundName: 'Etanol', reactionType: 'Sustitución', category: 'Hidrólisis', catalyst: '—', type: 'complete' },
             { id: 6, reaction: 'CH<sub>3</sub>-CH<sub>2</sub>-Br + KOH(alcohol) → ? + KBr + H<sub>2</sub>O', product: 'CH<sub>2</sub>=CH<sub>2</sub>', compoundName: 'Eteno', reactionType: 'Eliminación', category: 'Deshidrohalogenación', catalyst: 'Calor', type: 'complete' },
             // Alcoholes
-            { id: 7, reaction: 'CH<sub>3</sub>-CH=CH<sub>2</sub> + H<sub>2</sub>O → ?', product: 'CH<sub>3</sub>-CH(OH)-CH<sub>3</sub>', compoundName: 'Propan-2-ol', reactionType: 'Adición Electrofílica', category: 'Hidratación', catalyst: 'H+', type: 'complete' },
+            { id: 7, reaction: 'CH<sub>3</sub>-CH=CH<sub>2</sub> + H<sub>2</sub>O → ?', product: 'CH<sub>3</sub>-CH(OH)-CH<sub>3</sub>', compoundName: 'Propan-2-ol', reactionType: 'Adición', category: 'Hidratación', catalyst: 'H+', type: 'complete' },
             { id: 8, reaction: 'CH<sub>3</sub>-CH<sub>2</sub>-OH + H<sub>2</sub>SO<sub>4</sub>(conc) → ? + H<sub>2</sub>O', product: 'CH<sub>2</sub>=CH<sub>2</sub>', compoundName: 'Eteno', reactionType: 'Eliminación', category: 'Deshidratación', catalyst: '180°C', type: 'complete' },
             { id: 9, reaction: 'CH<sub>3</sub>-CH<sub>2</sub>-OH + [O] → ?', product: 'CH<sub>3</sub>-CHO', compoundName: 'Etanal', reactionType: 'Oxidación', category: 'Alcohol Primario', catalyst: 'K<sub>2</sub>Cr<sub>2</sub>O<sub>7</sub>/H+', type: 'complete' },
             { id: 10, reaction: 'CH<sub>3</sub>-CH(OH)-CH<sub>3</sub> + [O] → ?', product: 'CH<sub>3</sub>-CO-CH<sub>3</sub>', compoundName: 'Propanona', reactionType: 'Oxidación', category: 'Alcohol Secundario', catalyst: 'KMnO<sub>4</sub>/H+', type: 'complete' },
-            { id: 11, reaction: '2 CH<sub>3</sub>-CH<sub>2</sub>-OH + H<sub>2</sub>SO<sub>4</sub>(conc) → ? + H<sub>2</sub>O', product: 'CH<sub>3</sub>-CH<sub>2</sub>-O-CH<sub>2</sub>-CH<sub>3</sub>', compoundName: 'Dietil éter', reactionType: 'Sustitución', category: 'Formación de éter', catalyst: '140°C', type: 'complete' },
+            { id: 11, reaction: '2 CH<sub>3</sub>-CH<sub>2</sub>-OH + H<sub>2</sub>SO<sub>4</sub>(conc) → ? + H<sub>2</sub>O', product: 'CH<sub>3</sub>-CH<sub>2</sub>-O-CH<sub>2</sub>-CH<sub>3</sub>', compoundName: 'Dietil éter', reactionType: 'Sustitución', category: 'Formación de éter', catalyst: 'H<sub>2/S/O<sub>4', type: 'complete' },
             // Aldehídos y Cetonas
             { id: 12, reaction: 'CH<sub>3</sub>-CHO + H<sub>2</sub> → ?', product: 'CH<sub>3</sub>-CH<sub>2</sub>-OH', compoundName: 'Etanol', reactionType: 'Reducción', category: 'Hidrogenación', catalyst: 'Ni/Pt/Pd', type: 'complete' },
             { id: 13, reaction: 'CH<sub>3</sub>-CO-CH<sub>3</sub> + H<sub>2</sub> → ?', product: 'CH<sub>3</sub>-CH(OH)-CH<sub>3</sub>', compoundName: 'Propan-2-ol', reactionType: 'Reducción', category: 'Hidrogenación', catalyst: 'LiAlH<sub>4</sub>/NaBH<sub>4</sub>', type: 'complete' },
-            { id: 14, reaction: 'CH<sub>3</sub>-CHO + [O] → ?', product: 'CH<sub>3</sub>-COOH', compoundName: 'Ácido etanoico', reactionType: 'Oxidación', category: 'Reactivo de Tollens', catalyst: '[Ag(NH<sub>3</sub>)<sub>2</sub>]+', type: 'complete' },
+            { id: 14, reaction: 'CH<sub>3</sub>-CHO + [O] → ?', product: 'CH<sub>3</sub>-COOH', compoundName: 'Ácido etanoico', reactionType: 'Oxidación', category: 'Oxidación de aldehído', catalyst: '[Ag(NH<sub>3</sub>)<sub>2</sub>]+', type: 'complete' },
             { id: 15, reaction: 'CH≡CH + H<sub>2</sub>O → ?', product: 'CH<sub>3</sub>-CHO', compoundName: 'Etanal', reactionType: 'Adición', category: 'Hidratación de alquinos', catalyst: 'HgSO<sub>4</sub>/H<sub>2</sub>SO<sub>4</sub>', type: 'complete' },
             // Ácidos Carboxílicos y Derivados
             { id: 16, reaction: 'CH<sub>3</sub>-CH<sub>2</sub>OH + [O] fuerte → ?', product: 'CH<sub>3</sub>-COOH', compoundName: 'Ácido etanoico', reactionType: 'Oxidación', category: 'Alcohol Primario', catalyst: 'KMnO<sub>4</sub>', type: 'complete' },
-            { id: 17, reaction: 'CH<sub>3</sub>-COOH + CH<sub>3</sub>OH ↔ ? + H<sub>2</sub>O', product: 'CH<sub>3</sub>-COO-CH<sub>3</sub>', compoundName: 'Etanoato de metilo', reactionType: 'Esterificación de Fischer', category: 'Esterificación', catalyst: 'H+', type: 'complete' },
-            { id: 18, reaction: 'CH<sub>3</sub>-COO-CH<sub>2</sub>CH<sub>3</sub> + NaOH → ? + CH<sub>3</sub>CH<sub>2</sub>OH', product: 'CH<sub>3</sub>-COONa', compoundName: 'Etanoato de sodio', reactionType: 'Hidrólisis Básica', category: 'Saponificación', catalyst: 'Calor', type: 'complete' },
+            { id: 17, reaction: 'CH<sub>3</sub>-COOH + CH<sub>3</sub>OH ↔ ? + H<sub>2</sub>O', product: 'CH<sub>3</sub>-COO-CH<sub>3</sub>', compoundName: 'Etanoato de metilo', reactionType: 'Esterificación', category: '-', catalyst: 'H+', type: 'complete' },
+            { id: 18, reaction: 'CH<sub>3</sub>-COO-CH<sub>2</sub>CH<sub>3</sub> + NaOH → ? + CH<sub>3</sub>CH<sub>2</sub>OH', product: 'CH<sub>3</sub>-COONa', compoundName: 'Etanoato de sodio', reactionType: 'Hidrólisis', category: 'Saponificación', catalyst: 'Calor', type: 'complete' },
             { id: 19, reaction: 'CH<sub>3</sub>-COOH + NaOH → ? + H<sub>2</sub>O', product: 'CH<sub>3</sub>-COONa', compoundName: 'Etanoato de sodio', reactionType: 'Neutralización', category: 'Ácido-Base', catalyst: '—', type: 'complete' },
             { id: 20, reaction: 'CH<sub>3</sub>-COOH + LiAlH<sub>4</sub> → ?', product: 'CH<sub>3</sub>-CH<sub>2</sub>-OH', compoundName: 'Etanol', reactionType: 'Reducción', category: 'Reducción de Ácidos', catalyst: '1) LiAlH<sub>4</sub> 2) H<sub>3</sub>O+', type: 'complete' },
             // Hidrocarburos Aromáticos
-            { id: 21, reaction: 'C<sub>6</sub>H<sub>6</sub> + HNO<sub>3</sub> → ? + H<sub>2</sub>O', product: 'C<sub>6</sub>H<sub>5</sub>-NO<sub>2</sub>', compoundName: 'Nitrobenceno', reactionType: 'Sustitución Electrofílica', category: 'Nitración', catalyst: 'H<sub>2</sub>SO<sub>4</sub>', type: 'complete' },
-            { id: 22, reaction: 'C<sub>6</sub>H<sub>6</sub> + Br<sub>2</sub> → ? + HBr', product: 'C<sub>6</sub>H<sub>5</sub>Br', compoundName: 'Bromobenceno', reactionType: 'Sustitución Electrofílica', category: 'Halogenación', catalyst: 'FeBr<sub>3</sub>', type: 'complete' },
-            { id: 23, reaction: 'C<sub>6</sub>H<sub>6</sub> + CH<sub>3</sub>Cl → ? + HCl', product: 'C<sub>6</sub>H<sub>5</sub>-CH<sub>3</sub>', compoundName: 'Tolueno', reactionType: 'Sustitución Electrofílica', category: 'Alquilación Friedel-Crafts', catalyst: 'AlCl<sub>3</sub>', type: 'complete' },
+            { id: 21, reaction: 'C<sub>6</sub>H<sub>6</sub> + HNO<sub>3</sub> → ? + H<sub>2</sub>O', product: 'C<sub>6</sub>H<sub>5</sub>-NO<sub>2</sub>', compoundName: 'Nitrobenceno', reactionType: 'Sustitución', category: 'Nitración', catalyst: 'H<sub>2</sub>SO<sub>4</sub>', type: 'complete' },
+            { id: 22, reaction: 'C<sub>6</sub>H<sub>6</sub> + Br<sub>2</sub> → ? + HBr', product: 'C<sub>6</sub>H<sub>5</sub>Br', compoundName: 'Bromobenceno', reactionType: 'Sustitución', category: 'Halogenación', catalyst: 'FeBr<sub>3</sub>', type: 'complete' },
+            { id: 23, reaction: 'C<sub>6</sub>H<sub>6</sub> + CH<sub>3</sub>Cl → ? + HCl', product: 'C<sub>6</sub>H<sub>5</sub>-CH<sub>3</sub>', compoundName: 'Tolueno', reactionType: 'Sustitución', category: 'Alquilación', catalyst: 'AlCl<sub>3</sub>', type: 'complete' },
             { id: 24, reaction: 'C<sub>6</sub>H<sub>5</sub>-CH<sub>3</sub> + [O] → ?', product: 'C<sub>6</sub>H<sub>5</sub>-COOH', compoundName: 'Ácido benzoico', reactionType: 'Oxidación', category: 'Cadena lateral', catalyst: 'KMnO<sub>4</sub>/Calor', type: 'complete' },
             // Reacciones Variadas y de Nivel 3 (Reverse)
             { id: 25, reaction: '? + H<sub>2</sub>(exceso) → CH<sub>3</sub>CH<sub>2</sub>CH<sub>3</sub>', product: 'CH<sub>3</sub>-C≡CH', compoundName: 'Propino', reactionType: 'Adición', category: 'Hidrogenación', catalyst: 'Pt/Pd/Ni', type: 'reverse' },
@@ -264,8 +264,8 @@
             { id: 27, reaction: '? → C<sub>6</sub>H<sub>5</sub>-NO<sub>2</sub>', product: 'C<sub>6</sub>H<sub>6</sub>', compoundName: 'Benceno', reactionType: 'Nitración', category: null, catalyst: 'HNO<sub>3</sub>/H<sub>2</sub>SO<sub>4</sub>', type: 'reverse' },
             { id: 28, reaction: 'CH<sub>4</sub> + 2 O<sub>2</sub> → ? + ?', product: 'CO<sub>2</sub> + 2 H<sub>2</sub>O', compoundName: 'Dióxido de carbono y Agua', reactionType: 'Combustión', category: 'Combustión', catalyst: '—', type: 'complete' },
             { id: 29, reaction: 'n(CH<sub>2</sub>=CH<sub>2</sub>) → ?', product: '-(CH<sub>2</sub>-CH<sub>2</sub>)-n', compoundName: 'Polietileno', reactionType: 'Polimerización', category: 'Adición', catalyst: 'Iniciador', type: 'complete' },
-            { id: 30, reaction: 'CH<sub>3</sub>-C≡CH + H<sub>2</sub> → ?', product: 'CH<sub>3</sub>-CH=CH<sub>2</sub>', compoundName: 'Propeno', reactionType: 'Adición', category: 'Hidrogenación', catalyst: 'Catalizador de Lindlar', type: 'complete' },
-            { id: 72, reaction: '? + HBr (peróxidos) → CH<sub>3</sub>CH<sub>2</sub>CH<sub>2</sub>Br', product: 'CH<sub>3</sub>-CH=CH<sub>2</sub>', compoundName: 'Propeno', reactionType: 'Adición Radicalaria', category: 'Hidrohalogenación Anti-Markovnikov', catalyst: 'ROOR', type: 'reverse' }
+            { id: 30, reaction: 'CH<sub>3</sub>-C≡CH + H<sub>2</sub> → ?', product: 'CH<sub>3</sub>-CH=CH<sub>2</sub>', compoundName: 'Propeno', reactionType: 'Adición', category: 'Hidrogenación', catalyst: '-', type: 'complete' },
+            { id: 72, reaction: '? + HBr (peróxidos) → CH<sub>3</sub>CH<sub>2</sub>CH<sub>2</sub>Br', product: 'CH<sub>3</sub>-CH=CH<sub>2</sub>', compoundName: 'Propeno', reactionType: 'Adición', category: 'Hidrohalogenación Anti-Markovnikov', catalyst: 'ROOR', type: 'reverse' }
         ];
         
         // --- ESTADO DEL JUEGO ---
@@ -580,4 +580,5 @@
     </script>
 </body>
 </html>
+
 
